@@ -14,4 +14,6 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 #mkdir cscope
 #cd ../cscope
-#wget https://sourceforge.net/projects/cscope/files/cscope/v15.9/cscope-15.9.tar.gz
+wget https://sourceforge.net/projects/cscope/files/latest/download
+mv download cscope-latest.tar.gz
+tar -zxvf cscope-latest.tar.gz
