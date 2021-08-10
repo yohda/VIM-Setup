@@ -41,6 +41,8 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " yohda custom
 Plugin 'majutsushi/tagbar'
 Plugin 'scrooloose/nerdtree'
+Plugin 'tpope/vim-surround'
+Plugin 'scrooloose/syntastic'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
