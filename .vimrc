@@ -1,3 +1,25 @@
+call plug#begin()
+
+" let Vundle manage Vundle, required
+Plug 'majutsushi/tagbar'
+Plug 'scrooloose/nerdtree'
+"if has('nvim')
+"  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"else
+"  Plug 'Shougo/deoplete.nvim'
+"  Plug 'roxma/nvim-yarp'
+"  Plug 'roxma/vim-hug-neovim-rpc'
+"endif
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'morhetz/gruvbox'
+
+" All of your Plugins must be added before the following line
+call plug#end()            " required
+filetype plugin indent on    " required
+
+set tags=/home/pi/workspace/pi/tags
+
 " 각 언어의 문법에 맞게 키워드에 대한 하이라이트를 해준다.
 if has("syntax")
 	syntax on
@@ -46,29 +68,28 @@ abbr WQ! wq!
 abbr Wq! wq!
 abbr wQ! wq!
 
-" Vim session 저장
-command! Xs :mks! | :xa "save the session, save modified files, and exit
-" VIM의 기본 file explorer인 netrw에 대한 기본 설정
-let g:netrw_keepdir = 0 "keeps the directory you accessed previously. 
-let g:netrw_banner = 0 "hides the top banner that appears by default.
-let g:netrw_liststyle = 0 "change the display of files
-"0 shows only one directory at a time.
-"1 shows file data.
-"2 shows files in columns.
-"3 shows as a tree where open directories are expanded.
-let g:netrw_browse_split = 4 "changes how files are opened.
-"1 opens files in a horizontal split.
-"2 opens in a vertical split.
-"3 opens in a new tab.
-"4 opens in a previous window, avoiding the creation of more divisions.
-let g:netrw_altv = 1 "switches the NetRW display to the left.
-let g:netrw_winsize = 25 "limits window size to 25% of available screen space.
-augroup ProjectDrawer
-  autocmd!
-  autocmd VimEnter * :Vexplore
-augroup END
+" NERDTree Config
+let g:NERDTreeWinSize = 20
+" vim open시, NERDTree 자동 오픈. 
+au VimEnter *  NERDTree
+nmap <F7> :NERDTreeToggle<CR>
 
+" Tagbar Config
+nmap <F8> :TagbarToggle<CR>
+" autocmd FileType python,c,cpp TagbarOpen " vim open 시, tagbar도 켜기.
+nnoremap <F5> :bp!<CR>   
+nnoremap <F6> :b!<CR>    
+let g:airline#extensions#tabline#enabled = 1              " vim-airline 버퍼 목록 켜기
+let g:airline#extensions#tabline#fnamemod = ':t'          " vim-airline 버퍼 목록 파일명만 출력
+let g:airline#extensions#tabline#buffer_nr_show = 1       " buffer number를 보여준다
+let g:airline#extensions#tabline#buffer_nr_format = '%s:' " buffer number format
 
-function Yohda()
-	
-endfunction
+" deoplete
+" let g:deoplete#enable_at_startup = 1
+
+" airline-themes
+" let g:airline_theme='seoul256'
+
+" gruxbox config
+set background=dark
+colorscheme gruvbox
