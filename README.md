@@ -6,7 +6,7 @@
 
 ### 사용법
 1. 아직 `vim-plug`가 설치되어 있지 않았을 확률이 높으니, ./yohda_vim_env.sh를 실행한다.
-2. `.vimrc에 들어가서 `:PlugInstall`
+2. .vimrc에 들어가서 `:PlugInstall`
 
 ### VIM 특징
  1. **VIM은 가볍고 빠르다**
