@@ -4,52 +4,39 @@ filetype off                  " required
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-
-Plugin 'majutsushi/tagbar'
-Plugin 'scrooloose/nerdtree'
-if has('nvim')
-  Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+	Plugin 'VundleVim/Vundle.vim'
+	Plugin 'majutsushi/tagbar'
+	Plugin 'scrooloose/nerdtree'
+if has('nvim') && has('python3')
+	Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
-  Plugin 'Shougo/deoplete.nvim'
-  Plugin 'roxma/nvim-yarp'
-  Plugin 'roxma/vim-hug-neovim-rpc'
+	Plugin 'Shougo/deoplete.nvim'
+	Plugin 'roxma/nvim-yarp'
+	Plugin 'roxma/vim-hug-neovim-rpc'
 endif
-  Plugin 'vim-airline/vim-airline'
-  Plugin 'vim-airline/vim-airline-themes'
-  Plugin 'morhetz/gruvbox'
+	Plugin 'vim-airline/vim-airline'
+	Plugin 'vim-airline/vim-airline-themes'
+	Plugin 'morhetz/gruvbox'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
+call vundle#end()
+filetype plugin indent on
 
-" set tags=/home/pi/workspace/pi/tags
+set tags=/home/yohda/workspaces/projects/v533_v535/kernel/tags
+set tags+=/home/yohda/workspaces/projects/v533_v535/uboot/tags
 
 " 각 언어의 문법에 맞게 키워드에 대한 하이라이트를 해준다.
 if has("syntax")
 	syntax on
 endif
 
+" 검색할 문자를 입력할 때 마다, 실시간으로 cursor 가 대응하는 문자열로 이동한다.
+set incsearch
+
 " 라인을 보여줌.
 set nu
 
 " 탭 간격을 space 4번과 동일하게 해줌.
-set ts=2
+set ts=4
 
 " 대소문자 구분 없이 검색해줌.
 set ignorecase
@@ -77,6 +64,20 @@ colorscheme delek
 map <F12> :wq!<CR> 
 
 
+" cscope setup
+set csprg=/usr/bin/cscope
+set csto=0
+set cst
+set nocsverb
+
+if filereadable('./cscope.out')
+cscope add cscope.out
+else
+cscope add /usr/src/linux/cscope.out
+endif
+set csverb
+
+
 " 아래의 내용들은 파일들을 닫을 때, 오타 방지를 위해서 키를 맵핑하는 내용이다.
 " 실수로 파일을 닫을 때, 'q1', Q!', 'wq1' 등으로 오타를 내는 경우가 많기 때문에 아래와 같이 키를 맵핑하면 흐름이 끊기지 않을 수 있다.
 abbr Q q
@@ -92,16 +93,24 @@ abbr Wq! wq!
 abbr wQ! wq!
 
 " NERDTree Config
-let g:NERDTreeWinSize = 30
+let g:NERDTreeWinSize = 20
 " vim open시, NERDTree 자동 오픈. 
-au VimEnter *  NERDTree
+" au VimEnter *  NERDTree " When opening a file with auto-open nerdtree, sometimes take some times in many directories and files  
 nmap <F7> :NERDTreeToggle<CR>
+
+" Get full path of editing file
+nmap <C-G> :echo expand('%:p')<CR>
 
 " Tagbar Config
 nmap <F8> :TagbarToggle<CR>
 " autocmd FileType python,c,cpp TagbarOpen " vim open 시, tagbar도 켜기.
-nnoremap <F5> :bp!<CR>   
-nnoremap <F6> :bn!<CR>    
+
+" `bp` - 이전 파일 버퍼 open
+" `bn` - 다음 파일 버퍼 open  
+nnoremap <F5> :bp!<CR>  
+nnoremap <F6> :bn!<CR>  
+" nnoremap <F6> :b!<CR>    
+
 let g:airline#extensions#tabline#enabled = 1              " vim-airline 버퍼 목록 켜기
 let g:airline#extensions#tabline#fnamemod = ':t'          " vim-airline 버퍼 목록 파일명만 출력
 let g:airline#extensions#tabline#buffer_nr_show = 1       " buffer number를 보여준다
